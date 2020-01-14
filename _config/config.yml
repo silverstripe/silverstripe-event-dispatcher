@@ -1,0 +1,52 @@
+---
+Name: event-dispatcher-listeners-core
+---
+SilverStripe\Forms\GridField\GridField:
+  extensions:
+    - SilverStripe\EventDispatcher\Listener\GridField\Alteration\Listener
+    - SilverStripe\EventDispatcher\Listener\GridField\Action\Listener
+
+SilverStripe\Forms\FormRequestHandler:
+  extensions:
+    - SilverStripe\EventDispatcher\Listener\Form\Listener
+
+
+---
+Name: event-dispatcher-listeners-cms
+Only:
+ moduleexists: silverstripe/cms
+---
+SilverStripe\CMS\Controllers\CMSMain:
+  extensions:
+    - SilverStripe\EventDispatcher\Listener\CMSMain\Listener
+
+---
+Name: event-dispatcher-listeners-graphql
+Only:
+  moduleexists: silverstripe/graphql
+---
+SilverStripe\GraphQL\Scaffolding\Scaffolders\CRUD\Create:
+  extensions:
+    - SilverStripe\EventDispatcher\Listener\GraphQL\Mutation\Listener
+
+SilverStripe\GraphQL\Scaffolding\Scaffolders\CRUD\Delete:
+  extensions:
+    - SilverStripe\EventDispatcher\Listener\GraphQL\Mutation\Listener
+
+SilverStripe\GraphQL\Scaffolding\Scaffolders\CRUD\Update:
+  extensions:
+    - SilverStripe\EventDispatcher\Listener\GraphQL\Mutation\Listener
+
+SilverStripe\GraphQL\Manager:
+  extensions:
+    - SilverStripe\EventDispatcher\Listener\GraphQL\Middleware\Listener
+
+---
+Name: event-dispatcher-bootstrap
+---
+SilverStripe\Core\Injector\Injector:
+  SilverStripe\EventDispatcher\Dispatch\Dispatcher:
+    constructor:
+      backend: %$SilverStripe\EventDispatcher\Symfony\Backend
+  SilverStripe\EventDispatcher\Event\EventContextInterface:
+    class: SilverStripe\EventDispatcher\Symfony\Event

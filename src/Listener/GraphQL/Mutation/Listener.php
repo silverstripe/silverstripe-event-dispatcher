@@ -1,0 +1,79 @@
+<?php
+
+namespace SilverStripe\EventDispatcher\Listener\GraphQL\Mutation;
+
+use GraphQL\Type\Definition\ResolveInfo;
+use SilverStripe\Core\Extension;
+use SilverStripe\Core\Injector\Injector;
+use SilverStripe\EventDispatcher\Dispatch\Dispatcher;
+use SilverStripe\EventDispatcher\Event\EventContextInterface;
+use SilverStripe\GraphQL\Scaffolding\Scaffolders\MutationScaffolder;
+use SilverStripe\GraphQL\Scaffolding\Scaffolders\CRUD\Create;
+use SilverStripe\GraphQL\Scaffolding\Scaffolders\CRUD\Delete;
+use SilverStripe\GraphQL\Scaffolding\Scaffolders\CRUD\Update;
+use SilverStripe\ORM\SS_List;
+
+if (!class_exists(MutationScaffolder::class)) {
+    return;
+}
+
+/**
+ * Class GenericAction
+ *
+ * Snapshot action listener for GraphQL actions via generic CRUD API
+ *
+ * @property Create|Delete|Update|$this $owner
+ */
+class Listener extends Extension
+{
+
+    const TYPE_CREATE = 'create';
+    const TYPE_DELETE = 'delete';
+    const TYPE_UPDATE = 'update';
+
+    /**
+     * Extension point in @see Create::resolve
+     * Extension point in @see Delete::resolve
+     * Extension point in @see Update::resolve
+     * Graph QL action via generic CRUD API
+     *
+     * @param mixed $recordOrList
+     * @param array $args
+     * @param mixed $context
+     * @param mixed $info
+     */
+    public function afterMutation($recordOrList, array $args, $context, ResolveInfo $info): void
+    {
+        Dispatcher::singleton()->trigger(
+            'graphqlMutation',
+            Injector::inst()->create(
+                EventContextInterface::class,
+                $this->getActionFromScaffolder($this->owner),
+                [
+                    'list' => $recordOrList instanceof SS_List ? $recordOrList : null,
+                    'record' => !$recordOrList instanceof SS_List ? $recordOrList : null,
+                    'args' => $args,
+                    'context' => $context,
+                    'info' => $info,
+                ]
+            )
+        );
+    }
+
+    private function getActionFromScaffolder(MutationScaffolder $scaffolder): ?string
+    {
+        if ($scaffolder instanceof Create) {
+            return static::TYPE_CREATE;
+        }
+
+        if ($scaffolder instanceof Delete) {
+            return static::TYPE_DELETE;
+        }
+
+        if ($scaffolder instanceof Update) {
+            return static::TYPE_UPDATE;
+        }
+
+        return null;
+    }
+}
