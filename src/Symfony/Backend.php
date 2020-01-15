@@ -3,12 +3,11 @@
 
 namespace SilverStripe\EventDispatcher\Symfony;
 
-use SilverStripe\EventDispatcher\Dispatch\EventManagerInterface;
-use SilverStripe\EventDispatcher\Event\EventContextInterface;
+use SilverStripe\EventDispatcher\Dispatch\EventDispatcherInterface;
 use SilverStripe\EventDispatcher\Event\EventHandlerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-class Backend implements EventManagerInterface
+class Backend implements EventDispatcherInterface
 {
     /**
      * @var EventDispatcher
@@ -26,7 +25,7 @@ class Backend implements EventManagerInterface
     public function addListener(
         string $eventName,
         EventHandlerInterface $listener
-    ): EventManagerInterface
+    ): EventDispatcherInterface
     {
         $this->eventDispatcher->addListener($eventName, [$listener, 'fire']);
 
@@ -36,12 +35,12 @@ class Backend implements EventManagerInterface
     /**
      * @param string $eventName
      * @param EventHandlerInterface $listener
-     * @return EventManagerInterface
+     * @return EventDispatcherInterface
      */
     public function removeListener(
         string $eventName,
         EventHandlerInterface $listener
-    ): EventManagerInterface
+    ): EventDispatcherInterface
     {
         $this->eventDispatcher->removeListener($eventName, [$listener, 'fire']);
 
@@ -49,11 +48,11 @@ class Backend implements EventManagerInterface
     }
 
     /**
+     * @param object $eventContext
      * @param string $eventName
-     * @param EventContextInterface $context
      */
-    public function trigger(string $eventName, EventContextInterface $context): void
+    public function dispatch(object $eventContext, ?string $eventName = null): void
     {
-        $this->eventDispatcher->dispatch($context, $eventName);
+        $this->eventDispatcher->dispatch($eventContext, $eventName);
     }
 }

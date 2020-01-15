@@ -3,10 +3,10 @@
 
 namespace SilverStripe\EventDispatcher\Dispatch;
 
-use SilverStripe\EventDispatcher\Event\EventContextInterface;
 use SilverStripe\EventDispatcher\Event\EventHandlerInterface;
+use Psr\EventDispatcher\EventDispatcherInterface as PsrEventDispatcherInterface;
 
-interface EventManagerInterface
+interface EventDispatcherInterface extends PsrEventDispatcherInterface
 {
     /**
      * @param string $eventName
@@ -23,8 +23,8 @@ interface EventManagerInterface
     public function removeListener(string $eventName, EventHandlerInterface $listener): self;
 
     /**
-     * @param string $eventName
-     * @param EventContextInterface $context
+     * @param object $eventContext
+     * @param string|null $eventName
      */
-    public function trigger(string $eventName, EventContextInterface $context): void;
+    public function dispatch(object $eventContext, string $eventName = null): void;
 }

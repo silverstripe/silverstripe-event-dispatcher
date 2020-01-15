@@ -14,16 +14,11 @@ class Dispatcher
     use Injectable;
 
     /**
-     * @var EventManagerInterface
+     * @var EventDispatcherInterface
      */
     private $backend;
 
-    /**
-     * @var EventHandlerInterface[]
-     */
-    private $handlers = [];
-
-    /**
+        /**
      * @var DispatcherLoaderInterface[]
      */
     private $loaders = [];
@@ -35,9 +30,9 @@ class Dispatcher
 
     /**
      * Dispatcher constructor.
-     * @param EventManagerInterface $backend
+     * @param EventDispatcherInterface $backend
      */
-    public function __construct(EventManagerInterface $backend)
+    public function __construct(EventDispatcherInterface $backend)
     {
         $this->backend = $backend;
     }
@@ -109,14 +104,13 @@ class Dispatcher
         // First fire listeners to <eventName.actionName>, then just fire generic <eventName> listeners
         $eventsToFire = [ $event . '.' . $action, $event];
         foreach ($eventsToFire as $event) {
-            $handlers = $this->handlers[$event] ?? [];
-            /* @var EventHandlerInterface $handler */
-            foreach ($handlers as $handler) {
-                $handler->fire($context);
-            }
+            $this->backend->dispatch($context, $event);
         }
     }
 
+    /**
+     * Initialises the loaders lazily, to assure procedural overrides configuration
+     */
     private function initialise(): void
     {
         if ($this->initialised) {
@@ -124,7 +118,7 @@ class Dispatcher
         }
 
         foreach ($this->loaders as $loader) {
-            $loader->addToDispatcher($this);
+            $loader->addToDispatcher($this->backend);
         }
         $this->initialised = true;
     }
