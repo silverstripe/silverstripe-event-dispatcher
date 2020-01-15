@@ -25,8 +25,7 @@ class Backend implements EventDispatcherInterface
     public function addListener(
         string $eventName,
         EventHandlerInterface $listener
-    ): EventDispatcherInterface
-    {
+    ): EventDispatcherInterface {
         $this->eventDispatcher->addListener($eventName, [$listener, 'fire']);
 
         return $this;
@@ -40,8 +39,7 @@ class Backend implements EventDispatcherInterface
     public function removeListener(
         string $eventName,
         EventHandlerInterface $listener
-    ): EventDispatcherInterface
-    {
+    ): EventDispatcherInterface {
         $this->eventDispatcher->removeListener($eventName, [$listener, 'fire']);
 
         return $this;

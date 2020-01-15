@@ -41,7 +41,6 @@ class DispatchTest extends SapphireTest
 
         $dispatcher->trigger('myEvent3', $e = new MockEvent('test'));
         $this->assertEquals('handler-two', $e->result);
-
     }
 
     public function testHandlerException()
@@ -88,7 +87,6 @@ class DispatchTest extends SapphireTest
             new class implements EventHandlerInterface {
                 public function fire(EventContextInterface $context): void
                 {
-
                 }
             }
         ]);

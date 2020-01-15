@@ -33,6 +33,5 @@ class MockBackend implements EventDispatcherInterface
 
     public function removeListener(string $eventName, EventHandlerInterface $listener): EventDispatcherInterface
     {
-
     }
 }

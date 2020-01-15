@@ -122,5 +122,4 @@ class Dispatcher
         }
         $this->initialised = true;
     }
-
 }
