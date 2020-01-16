@@ -6,7 +6,12 @@ SilverStripe\Forms\GridField\GridField:
     - SilverStripe\EventDispatcher\Listener\GridField\Alteration\Listener
     - SilverStripe\EventDispatcher\Listener\GridField\Action\Listener
 
-SilverStripe\Forms\FormRequestHandler:
+---
+Name: event-dispatcher-listeners-form
+Only:
+  moduleexists: silverstripe/admin
+---
+SilverStripe\Admin\LeftAndMainFormRequestHandler:
   extensions:
     - SilverStripe\EventDispatcher\Listener\Form\Listener
 

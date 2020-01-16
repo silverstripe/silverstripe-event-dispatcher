@@ -12,6 +12,7 @@ use SilverStripe\GraphQL\Scaffolding\Scaffolders\CRUD\Create;
 use SilverStripe\GraphQL\Scaffolding\Scaffolders\CRUD\Delete;
 use SilverStripe\GraphQL\Scaffolding\Scaffolders\CRUD\Update;
 use SilverStripe\ORM\SS_List;
+use SilverStripe\View\ViewableData;
 
 if (!class_exists(MutationScaffolder::class)) {
     return;
@@ -50,8 +51,8 @@ class Listener extends Extension
                 EventContextInterface::class,
                 $this->getActionFromScaffolder($this->owner),
                 [
-                    'list' => $recordOrList instanceof SS_List ? $recordOrList : null,
-                    'record' => !$recordOrList instanceof SS_List ? $recordOrList : null,
+                    'list' => is_array($recordOrList) || $recordOrList instanceof SS_List ? $recordOrList : null,
+                    'record' => $recordOrList instanceof ViewableData ? $recordOrList : null,
                     'args' => $args,
                     'context' => $context,
                     'info' => $info,
