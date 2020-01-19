@@ -78,7 +78,10 @@ class Dispatcher
                 ));
             }
 
-            foreach ($on as $eventName => $shouldInclude) {
+            $off = $spec['off'] ?? [];
+
+            foreach ($on as $eventName) {
+                $shouldInclude = !in_array($eventName, $off);
                 if ($shouldInclude) {
                     $this->backend->addListener($eventName, $handler);
                 }

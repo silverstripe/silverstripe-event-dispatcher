@@ -4,9 +4,8 @@ namespace SilverStripe\EventDispatcher\Listener\GridField\Action;
 
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Core\Extension;
-use SilverStripe\Core\Injector\Injector;
 use SilverStripe\EventDispatcher\Dispatch\Dispatcher;
-use SilverStripe\EventDispatcher\Event\EventContextInterface;
+use SilverStripe\EventDispatcher\Symfony\Event;
 use SilverStripe\Forms\GridField\GridField;
 
 /**
@@ -32,8 +31,7 @@ class Listener extends Extension
     {
         Dispatcher::singleton()->trigger(
             'gridFieldAction',
-            Injector::inst()->create(
-                EventContextInterface::class,
+            Event::create(
                 $action,
                 [
                     'request' => $request,

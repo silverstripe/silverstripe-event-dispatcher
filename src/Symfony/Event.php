@@ -4,11 +4,14 @@
 namespace SilverStripe\EventDispatcher\Symfony;
 
 
+use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\EventDispatcher\Event\EventContextInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
 class Event implements EventContextInterface
 {
+    use Injectable;
+
     /**
      * @var GenericEvent
      */

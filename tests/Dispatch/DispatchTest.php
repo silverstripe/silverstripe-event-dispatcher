@@ -96,7 +96,7 @@ class DispatchTest extends SapphireTest
     {
         return [
             [
-                'on' => ['myEvent1' => true, 'myEvent2' => true],
+                'on' => ['myEvent1', 'myEvent2'],
                 'handler' => new class implements EventHandlerInterface {
                     public function fire(EventContextInterface $context): void
                     {
@@ -105,7 +105,8 @@ class DispatchTest extends SapphireTest
                 },
             ],
             [
-                'on' => ['myEvent3' => true, 'myEvent1' => false],
+                'on' => ['myEvent3'],
+                'off' => ['myEvent1'],
                 'handler' => new class implements EventHandlerInterface {
                     public function fire(EventContextInterface $context): void
                     {
@@ -114,7 +115,8 @@ class DispatchTest extends SapphireTest
                 },
             ],
             [
-                'on' => ['myEvent1' => true, 'myEvent2' => false],
+                'on' => ['myEvent1'],
+                'off' => ['myEvent2'],
                 'handler' => new class implements EventHandlerInterface {
                     public function fire(EventContextInterface $context): void
                     {
@@ -123,7 +125,8 @@ class DispatchTest extends SapphireTest
                 },
             ],
             [
-                'on' => ['myEvent1.test' => true, 'myEvent2.test' => true, 'myEvent3.test' => false],
+                'on' => ['myEvent1.test', 'myEvent2.test', 'myEvent3.test'],
+                'off' => ['myEvent3.test'],
                 'handler' => new class implements EventHandlerInterface {
                     public function fire(EventContextInterface $context): void
                     {

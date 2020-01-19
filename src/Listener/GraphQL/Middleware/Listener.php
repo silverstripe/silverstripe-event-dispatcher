@@ -8,9 +8,8 @@ use GraphQL\Language\Parser;
 use GraphQL\Language\Source;
 use GraphQL\Type\Schema;
 use SilverStripe\Core\Extension;
-use SilverStripe\Core\Injector\Injector;
 use SilverStripe\EventDispatcher\Dispatch\Dispatcher;
-use SilverStripe\EventDispatcher\Event\EventContextInterface;
+use SilverStripe\EventDispatcher\Symfony\Event;
 use SilverStripe\GraphQL\Manager;
 
 if (!class_exists(Manager::class)) {
@@ -40,8 +39,7 @@ class Listener extends Extension
     {
         Dispatcher::singleton()->trigger(
             'graphqlOperation',
-            Injector::inst()->create(
-                EventContextInterface::class,
+            Event::create(
                 $this->getActionFromQuery($query),
                 [
                     'schema' => $schema,

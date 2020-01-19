@@ -4,9 +4,8 @@ namespace SilverStripe\EventDispatcher\Listener\GraphQL\Mutation;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use SilverStripe\Core\Extension;
-use SilverStripe\Core\Injector\Injector;
 use SilverStripe\EventDispatcher\Dispatch\Dispatcher;
-use SilverStripe\EventDispatcher\Event\EventContextInterface;
+use SilverStripe\EventDispatcher\Symfony\Event;
 use SilverStripe\GraphQL\Scaffolding\Scaffolders\MutationScaffolder;
 use SilverStripe\GraphQL\Scaffolding\Scaffolders\CRUD\Create;
 use SilverStripe\GraphQL\Scaffolding\Scaffolders\CRUD\Delete;
@@ -47,8 +46,7 @@ class Listener extends Extension
     {
         Dispatcher::singleton()->trigger(
             'graphqlMutation',
-            Injector::inst()->create(
-                EventContextInterface::class,
+            Event::create(
                 $this->getActionFromScaffolder($this->owner),
                 [
                     'list' => is_array($recordOrList) || $recordOrList instanceof SS_List ? $recordOrList : null,

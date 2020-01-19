@@ -5,9 +5,8 @@ namespace SilverStripe\EventDispatcher\Listener\CMSMain;
 use SilverStripe\CMS\Controllers\CMSMain;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Core\Extension;
-use SilverStripe\Core\Injector\Injector;
 use SilverStripe\EventDispatcher\Dispatch\Dispatcher;
-use SilverStripe\EventDispatcher\Event\EventContextInterface;
+use SilverStripe\EventDispatcher\Symfony\Event;
 
 if (!class_exists(CMSMain::class)) {
     return;
@@ -33,8 +32,7 @@ class Listener extends Extension
     {
         Dispatcher::singleton()->trigger(
             'cmsAction',
-            Injector::inst()->create(
-                EventContextInterface::class,
+            Event::create(
                 $action,
                 [
                     'result' => $result,
