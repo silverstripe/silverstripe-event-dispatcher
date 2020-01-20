@@ -116,7 +116,7 @@ SilverStripe\Core\Injector\Injector:
         myLoader: %$MyProject\MyLoader
 ```
 
-### Action identifiers
+### Action identifiers and context
 
 Each of these handlers is passed a context object that exposes an **action identifier**. This is a string that
 provides specific information about what happened in the event that the handler can then use in its implementation.
@@ -173,6 +173,35 @@ public function trigger(string $event, EventContextInterface $context): void
 
 When the logging is in place you just go to the CMS and perform the action you are interested in.
 This should narrow the list of identifier down to a much smaller subset.
+
+#### Event context
+
+In the above example, the contact form data is passed to the `Event` object as context.
+
+```php
+use SilverStripe\EventDispatcher\Dispatch\Dispatcher;
+use SilverStripe\EventDispatcher\Symfony\Event;
+
+Dispatcher::singleton()->trigger('formSubmitted', Event::create(
+    'contact',
+    [
+        'name' => $formData['Name'],
+        // etc..
+    ]
+));
+```
+
+In a handler, this can be accessed using the `get(string $property)` method.
+
+```php
+public function fire(EventContextInterface $context): void
+{
+    $name = $context->get('Name');
+    // do more stuff...
+}
+```
+
+Note that `get` fails gracefully, and will return `null` when a property doesn't exist.
 
 ## License
 See [License](license.md)
