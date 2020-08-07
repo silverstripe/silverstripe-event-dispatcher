@@ -10,7 +10,7 @@ env:
 matrix:
   include:
     - php: 7.2
-      env: DB=MYSQL FRAMEWORK_VERSION=4.5.1 PHPUNIT_TEST=1
+      env: DB=MYSQL SYMFONY_VERSION=^4 FRAMEWORK_VERSION=4.5.1 PHPUNIT_TEST=1
     - php: 7.3
       env: DB=MYSQL FRAMEWORK_VERSION=4.x-dev PHPUNIT_TEST=1 PHPCS_TEST=1
 
@@ -20,6 +20,7 @@ before_script:
 
   - composer validate
   - composer require --no-update silverstripe/framework:"$FRAMEWORK_VERSION"
+  - if [[ $SYMFONY_VERSION ]]; then composer require --no-update symfony/event-dispatcher:$SYMFONY_VERSION; fi
   - composer install --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile
 
 script:
