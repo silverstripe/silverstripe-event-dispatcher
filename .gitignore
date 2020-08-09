@@ -1,1 +1,4 @@
 node_modules
+vendor
+silverstripe-cache
+composer.lock
