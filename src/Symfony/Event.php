@@ -1,8 +1,6 @@
 <?php
 
-
 namespace SilverStripe\EventDispatcher\Symfony;
-
 
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\EventDispatcher\Event\EventContextInterface;

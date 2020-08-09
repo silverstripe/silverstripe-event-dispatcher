@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SilverStripe\EventDispatcher\Symfony;
 
 use SilverStripe\EventDispatcher\Dispatch\EventDispatcherInterface;

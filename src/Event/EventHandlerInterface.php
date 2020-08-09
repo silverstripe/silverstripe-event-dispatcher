@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SilverStripe\EventDispatcher\Event;
 
 interface EventHandlerInterface

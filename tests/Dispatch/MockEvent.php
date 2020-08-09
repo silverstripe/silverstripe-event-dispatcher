@@ -1,8 +1,6 @@
 <?php
 
-
 namespace SilverStripe\EventDispatcher\Tests\Dispatch;
-
 
 use SilverStripe\EventDispatcher\Event\EventContextInterface;
 
