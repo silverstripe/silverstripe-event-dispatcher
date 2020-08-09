@@ -1,8 +1,6 @@
 <?php
 
-
 namespace SilverStripe\EventDispatcher\Tests\Dispatch;
-
 
 use SilverStripe\EventDispatcher\Dispatch\EventDispatcherInterface;
 use SilverStripe\EventDispatcher\Event\EventHandlerInterface;
@@ -33,5 +31,6 @@ class MockBackend implements EventDispatcherInterface
 
     public function removeListener(string $eventName, EventHandlerInterface $listener): EventDispatcherInterface
     {
+        return $this;
     }
 }
