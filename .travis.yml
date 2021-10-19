@@ -1,32 +1,4 @@
-language: php
+version: ~> 1.0
 
-services:
- - mysql
-
-env:
-  global:
-    - TRAVIS_NODE_VERSION="10"
-
-matrix:
-  include:
-    - php: 7.2
-      env: DB=MYSQL SYMFONY_VERSION=^4 FRAMEWORK_VERSION=4.5.1 PHPUNIT_TEST=1
-    - php: 7.3
-      env: DB=MYSQL FRAMEWORK_VERSION=4.x-dev PHPUNIT_TEST=1 PHPCS_TEST=1
-
-before_script:
-  - phpenv rehash
-  - phpenv config-rm xdebug.ini
-
-  - composer validate
-  - composer require --no-update silverstripe/framework:"$FRAMEWORK_VERSION"
-  - if [[ $SYMFONY_VERSION ]]; then composer require --no-update symfony/event-dispatcher:$SYMFONY_VERSION; fi
-  - composer install --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile
-
-script:
-  - if [[ $PHPUNIT_TEST ]]; then vendor/bin/phpunit; fi
-  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.xml; fi
-  - if [[ $PHPCS_TEST ]]; then vendor/bin/phpcs src/ tests/; fi
-
-after_success:
-  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then bash <(curl -s https://codecov.io/bash) -f coverage.xml -F php; fi
+import:
+  - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs-range.yml
