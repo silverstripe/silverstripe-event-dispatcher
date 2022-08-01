@@ -1,5 +1,7 @@
 # Event dispatcher for Silverstripe CMS
 
+[![CI](https://github.com/silverstripe/silverstripe-event-dispatcher/actions/workflows/ci.yml/badge.svg)](https://github.com/silverstripe/silverstripe-event-dispatcher/actions/workflows/ci.yml)
+
 This module provides a [PSR-14 event dispatcher](https://www.php-fig.org/psr/psr-14/) to Silverstripe CMS
 applications. It is useful for [reactive programming](https://en.wikipedia.org/wiki/Reactive_programming)
 paradigms in lieu of traditional imperative designs through hooks like `onAfterWrite`.
@@ -215,8 +217,8 @@ If the issue does look like a new bug:
  - Create a new issue
  - Describe the steps required to reproduce your issue, and the expected outcome. Unit tests, screenshots
  and screencasts can help here.
- - Describe your environment as detailed as possible: SilverStripe version, Browser, PHP version,
- Operating System, any installed SilverStripe modules.
+ - Describe your environment as detailed as possible: Silverstripe version, Browser, PHP version,
+ Operating System, any installed Silverstripe modules.
 
 Please report security issues to the module maintainers directly. Please don't file security issues in the bugtracker.
 
