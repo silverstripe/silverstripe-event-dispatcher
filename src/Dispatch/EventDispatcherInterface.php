@@ -12,14 +12,14 @@ interface EventDispatcherInterface extends PsrEventDispatcherInterface
      * @param EventHandlerInterface $listener
      * @return $this
      */
-    public function addListener(string $eventName, EventHandlerInterface $listener): self;
+    public function addListener(string $eventName, EventHandlerInterface $listener): EventDispatcherInterface;
 
     /**
      * @param string $eventName
      * @param EventHandlerInterface $listener
      * @return $this
      */
-    public function removeListener(string $eventName, EventHandlerInterface $listener): self;
+    public function removeListener(string $eventName, EventHandlerInterface $listener): EventDispatcherInterface;
 
     /**
      * @param object $eventContext
