@@ -10,7 +10,7 @@
     "license": "BSD-3-Clause",
     "require": {
         "php": "^8.3",
-        "silverstripe/framework": "^6",
+        "silverstripe/framework": "^7",
         "symfony/event-dispatcher": "^7.0",
         "psr/event-dispatcher": "^1.0"
     },
